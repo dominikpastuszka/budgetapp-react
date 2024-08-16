@@ -24,19 +24,19 @@ const App = () => {
     setEditTransaction(null);
   };
 
-  const deleteTransaction = (transactionId) => {
+  const deleteTransaction = (id) => {
     setTransactions(
-      transactions.filter((transaction) => transaction.id !== transactionId)
+      transactions.filter((transaction) => transaction.id !== id)
     );
     setDeleteTransactionId(null);
   };
 
   const getBalance = () => {
     return transactions.reduce(
-      (balance, transaction) =>
+      (acc, transaction) =>
         transaction.type === "income"
-          ? balance + transaction.amount
-          : balance - transaction.amount,
+          ? acc + transaction.amount
+          : acc - transaction.amount,
       0
     );
   };
@@ -44,12 +44,17 @@ const App = () => {
   const balance = getBalance();
   const balanceText =
     balance > 0
-      ? `Bilans: ${balance} zł Możesz jeszcze wydać ${balance} złotych`
+      ? `Bilans: ${balance} zł`
       : balance === 0
-      ? `Bilans: 0 zł Bilans wynosi zero`
-      : `Bilans: ${balance} zł Bilans jest ujemny. Jesteś na minusie ${Math.abs(
-          balance
-        )} złotych`;
+      ? `Bilans: 0 zł`
+      : `Bilans: ${balance} zł`;
+
+  const balanceMessage =
+    balance > 0
+      ? `Możesz jeszcze wydać ${balance} złotych`
+      : balance === 0
+      ? `Bilans wynosi zero`
+      : `Bilans jest ujemny. Jesteś na minusie ${Math.abs(balance)} złotych`;
 
   return (
     <div className="container">
@@ -57,11 +62,12 @@ const App = () => {
         <h1 className="header-title">Budżet Domowy</h1>
       </header>
       <h2 className="balance">{balanceText}</h2>
+      <p className="balance-message">{balanceMessage}</p>
       <TransactionForm addTransaction={addTransaction} />
       <TransactionList
         transactions={transactions}
         onEdit={setEditTransaction}
-        onDelete={(transactionId) => setDeleteTransactionId(transactionId)}
+        onDelete={(id) => setDeleteTransactionId(id)}
       />
       {editTransaction && (
         <EditModal
