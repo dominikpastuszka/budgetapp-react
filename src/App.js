@@ -15,24 +15,28 @@ const App = () => {
 
   const updateTransaction = (updatedTransaction) => {
     setTransactions(
-      transactions.map((t) =>
-        t.id === updatedTransaction.id ? updatedTransaction : t
+      transactions.map((transaction) =>
+        transaction.id === updatedTransaction.id
+          ? updatedTransaction
+          : transaction
       )
     );
     setEditTransaction(null);
   };
 
-  const deleteTransaction = (id) => {
-    setTransactions(transactions.filter((t) => t.id !== id));
+  const deleteTransaction = (transactionId) => {
+    setTransactions(
+      transactions.filter((transaction) => transaction.id !== transactionId)
+    );
     setDeleteTransactionId(null);
   };
 
   const getBalance = () => {
     return transactions.reduce(
-      (acc, transaction) =>
+      (balance, transaction) =>
         transaction.type === "income"
-          ? acc + transaction.amount
-          : acc - transaction.amount,
+          ? balance + transaction.amount
+          : balance - transaction.amount,
       0
     );
   };
@@ -50,14 +54,14 @@ const App = () => {
   return (
     <div className="container">
       <header>
-        <h1>Budżet Domowy</h1>
+        <h1 className="header-title">Budżet Domowy</h1>
       </header>
-      <h2 id="balance">{balanceText}</h2>
+      <h2 className="balance">{balanceText}</h2>
       <TransactionForm addTransaction={addTransaction} />
       <TransactionList
         transactions={transactions}
         onEdit={setEditTransaction}
-        onDelete={(id) => setDeleteTransactionId(id)}
+        onDelete={(transactionId) => setDeleteTransactionId(transactionId)}
       />
       {editTransaction && (
         <EditModal
@@ -69,7 +73,7 @@ const App = () => {
       {deleteTransactionId !== null && (
         <ConfirmDeleteModal
           transactionId={deleteTransactionId}
-          transactions={transactions} // Pass the transactions here
+          transactions={transactions}
           onConfirm={() => deleteTransaction(deleteTransactionId)}
           onCancel={() => setDeleteTransactionId(null)}
         />

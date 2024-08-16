@@ -34,7 +34,7 @@ const TransactionForm = ({ addTransaction }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="transaction-form">
       <div className="form-group">
         <input
           type="text"

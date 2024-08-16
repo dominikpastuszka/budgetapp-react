@@ -32,7 +32,7 @@ const EditModal = ({ transaction, onUpdate, onClose }) => {
   };
 
   return (
-    <div id="edit-modal" className="modal">
+    <div className="modal edit-modal">
       <div className="modal-content">
         <span className="close" onClick={onClose}>
           &times;

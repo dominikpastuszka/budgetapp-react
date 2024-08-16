@@ -6,13 +6,14 @@ const ConfirmDeleteModal = ({
   onConfirm,
   onCancel,
 }) => {
-  // Find the transaction based on the provided transactionId
-  const transaction = transactions.find((t) => t.id === transactionId);
+  const transaction = transactions.find(
+    (transaction) => transaction.id === transactionId
+  );
 
   if (!transaction) return null;
 
   return (
-    <div id="confirm-delete-modal" className="modal">
+    <div className="modal confirm-delete-modal">
       <div className="modal-content">
         <span className="close" onClick={onCancel}>
           &times;
@@ -22,8 +23,12 @@ const ConfirmDeleteModal = ({
           Czy na pewno chcesz usunąć "{transaction.description}" o wartości{" "}
           {transaction.amount} zł?
         </p>
-        <button onClick={onConfirm}>Tak, usuń</button>
-        <button onClick={onCancel}>Anuluj</button>
+        <button className="confirm-button" onClick={onConfirm}>
+          Tak, usuń
+        </button>
+        <button className="cancel-button" onClick={onCancel}>
+          Anuluj
+        </button>
       </div>
     </div>
   );
